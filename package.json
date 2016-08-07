@@ -7,9 +7,13 @@
     "lint": "standard",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["cli", "monitor", "couchdb"],
+  "keywords": [
+    "cli",
+    "monitor",
+    "couchdb"
+  ],
   "license": "AGPL-3.0",
-  "repository": "millette/jheson",
+  "repository": "millette/couchdb-health",
   "author": {
     "name": "Robin Millette",
     "email": "robin@millette.info",
@@ -20,9 +24,9 @@
     "node": ">=4"
   },
   "dependencies": {
-    "got": "^6.3.0",
     "jheson": "0.0.2",
-    "meow": "^3.7.0"
+    "meow": "^3.7.0",
+    "nano": "^6.2.0"
   },
   "devDependencies": {
     "standard": "^7.1.2"
