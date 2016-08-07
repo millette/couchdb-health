@@ -22,13 +22,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // npm
 const jheson = require('jheson')
-const got = require('got')
+// const got = require('got')
 const nano = require('nano')
 
-const xx = (x, db) => {
-  console.log('x', Object.keys(x))
-  console.log('db', Object.keys(db))
+const xx = (sources, x, db) => {
+  const now = Date.now()
+  Promise.all(sources.map((q) => jheson.jsonFromUrl(q).then((a) => x.jheson(a))))
+    .then((bunch) => new Promise((resolve, reject) => db.bulk({ docs: bunch.map((tt, n) => {
+      return {
+        data: tt,
+        _id: `src:${n}:${now}`
+      }
+    }) }, (a, b) => a ? reject(a) : resolve(b))))
+    .then((g) => console.log('g', now, g))
+    .catch((e) => console.error('E0:', e))
+
+/*
+  jheson.jsonFromUrl('http://localhost:5984/_stats')
+    .then((a) => x.jheson(a))
+    .then((y) => new Promise((resolve, reject) =>
+      db.insert({ data: y, _id: `src:0:${Date.now()}` }, (c, d) => c ? reject(c) : resolve(d))
+    ))
+    .then((g) => {
+      console.log('g', g)
+    })
+    .catch((e) => console.error('E0:', e))
+*/
 }
 
-module.exports = (dbUrl, moldFile) => jheson.moldMethods(moldFile)
-  .then((x) => setInterval(xx, 60000, x, nano(dbUrl)))
+module.exports = (dbUrl, moldFile, s, sources) => jheson.moldMethods(moldFile)
+  .then((x) => setInterval(xx, s * 1000, sources, x, nano(dbUrl)))
