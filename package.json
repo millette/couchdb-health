@@ -24,6 +24,7 @@
     "node": ">=4"
   },
   "dependencies": {
+    "got": "^6.3.0",
     "jheson": "0.0.2",
     "meow": "^3.7.0",
     "nano": "^6.2.0"

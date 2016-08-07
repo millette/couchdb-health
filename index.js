@@ -22,3 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // npm
 const jheson = require('jheson')
+const got = require('got')
+const nano = require('nano')
+
+const xx = (x, db) => {
+  console.log('x', Object.keys(x))
+  console.log('db', Object.keys(db))
+}
+
+module.exports = (dbUrl, moldFile) => jheson.moldMethods(moldFile)
+  .then((x) => setInterval(xx, 60000, x, nano(dbUrl)))

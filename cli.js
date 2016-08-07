@@ -45,3 +45,12 @@ const cli = meow([
   default: { mold: './mold.json' }
 })
 
+health('http://localhost:5984/health', './mold.json')
+  .then((x) => {
+    console.log('timer:', Object.keys(x))
+    setTimeout(() => {
+      console.log('clear!')
+      clearInterval(x)
+    }, 100000)
+  })
+  .catch((e) => console.error('E1:', e))
